@@ -12,14 +12,17 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import environ
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 env=environ.Env()
 environ.Env.read_env()
-MEDIA_DIR = 'media'
-MEDIA_URL='/media/'
-MEDIA_ROOT=BASE_DIR/'media'
+# MEDIA_DIR = 'media'
+# MEDIA_URL='/media/'
+# MEDIA_ROOT=BASE_DIR/'media'
 
 
 
@@ -30,7 +33,7 @@ MEDIA_ROOT=BASE_DIR/'media'
 SECRET_KEY = 'django-insecure-1(aggv%v@a6&(ti12ft6$c47d)a_+6(svf#t&k#l@hv_^j-rfb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -44,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'operations_app'
 ]
 
@@ -134,3 +139,11 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CLOUDINARY_STORAGE = {
+    'cloud_name' :"dwjelugmh", 
+    'api_key' : "574554378395221", 
+    'api_secret' : "XF97ieTMhfM7NbBw8i7brLXoKBw"
+}
+# Use Cloudinary for media file storage
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

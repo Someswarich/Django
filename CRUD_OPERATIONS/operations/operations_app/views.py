@@ -10,7 +10,7 @@ def validate_file(file):
     max_size = 5 * 1024 * 1024
     if file.size > max_size:
         return False, 'file size is exceeded'
-    allowed_type = ['image/png', 'image.jpg', 'application/pdf']
+    allowed_type = ['image/png', 'image/jpeg', 'application/pdf']
     if file.content_type not in allowed_type:
         return False, 'file with jpg, png, pdf extensions only allowed'
     return True, 'valid'
@@ -32,7 +32,7 @@ def product_details(req):
             'description': req.POST.get('description'),
             'price': req.POST.get('price'),
         }
-        photo = req.FILES.get('file')
+        photo = req.FILES.get('photo')
         data['photo'] = photo
 
         final_data = ProductSerializer(data=data)
