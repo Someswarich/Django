@@ -141,9 +141,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CLOUDINARY_STORAGE = {
-    'cloud_name' :"dwjelugmh", 
-    'api_key' : "574554378395221", 
-    'api_secret' : "XF97ieTMhfM7NbBw8i7brLXoKBw"
+    'cloud_name' :env('CLOUDINARY_CLOUD_NAME'),
+    'api_key' : env('CLOUDINARY_API_KEY'), 
+    'api_secret' :env('CLOUDINARY_API_SECRET')
 }
 # Use Cloudinary for media file storage
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
