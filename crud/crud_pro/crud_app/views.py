@@ -3,6 +3,7 @@ from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from crud_app.models import Emp_data
+import bcrypt
 
 # Create your views here.
 
@@ -22,13 +23,18 @@ def reg_user(req):
     emp_name=data.get('name')
     emp_salary=data.get('salary')
     emp_role=data.get('role')
+    role=emp_role.encode('utf-8')
+    salt=bcrypt.gensalt(rounds=12)
+    encrypt_role=bcrypt.hashpw(password=role,salt=salt)
+    
+    
     emp_id=data.get('id')
     existing_emp = Emp_data.objects.filter(id=emp_id)
     if existing_emp.exists():
         return HttpResponse("Employee already exists")
         
     else:
-        table=Emp_data.objects.create(name=emp_name,salary=emp_salary,role=emp_role)
+        table=Emp_data.objects.create(name=emp_name,salary=emp_salary,role=encrypt_role)
         return HttpResponse("emp registered successfully")
 
 
@@ -54,4 +60,3 @@ def update_user(req,id):
         else:
             return HttpResponse("Employee not found")
         
-    

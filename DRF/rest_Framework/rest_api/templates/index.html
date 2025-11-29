@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main_container mt-4">
+        <h3>USER INFORMATION</h3>
+        <!-- <form method="post" action="{% if u %}{% url 'update' u.id %}{% else %}{% url 'add' %}{% endif %} " class="row g-2 mb-4"> -->
+
+        <form method="post" action="{% url 'add' %}" class="row g-2 mb-4">
+            {% csrf_token %}
+            <div class="col-sm-3">
+                <input type="text" name="user_name" placeholder="user_name" class="form-control">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" name="user_email" placeholder="user_email" class="form-control">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" name="mobile_no" placeholder="mobile_no" class="form-control">
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-primary w-100" type="submit">Add</button>
+            </div>
+
+        </form>
+        <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile No</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for u in users_data %}
+        <tr>
+            {% if user and user.id == u.id %}
+            <!-- Editable row -->
+            <form method="post" action="{% url 'update' u.id %}">
+                {% csrf_token %}
+                <td><input type="text" name="user_name" value="{{ u.user_name }}" class="form-control"></td>
+                <td><input type="text" name="user_email" value="{{ u.user_email }}" class="form-control"></td>
+                <td><input type="text" name="mobile_no" value="{{ u.mobile_no }}" class="form-control"></td>
+                <td>
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    <a href="{% url 'get' %}" class="btn btn-secondary btn-sm">Cancel</a>
+                </td>
+            </form>
+            {% else %}
+            <!-- Normal row -->
+            <td>{{ u.user_name }}</td>
+            <td>{{ u.user_email }}</td>
+            <td>{{ u.mobile_no }}</td>
+            <td>
+                <a href="{% url 'update' u.id %}" class="btn btn-warning btn-sm">Update</a>
+                <a href="{% url 'delete' u.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr>
+            <th colspan="4" class="text-center">No Users Found</th>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    </div>
+</body>
+
+</html>

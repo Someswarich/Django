@@ -33,9 +33,9 @@ environ.Env.read_env()
 SECRET_KEY = 'django-insecure-1(aggv%v@a6&(ti12ft6$c47d)a_+6(svf#t&k#l@hv_^j-rfb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=True)
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
 
-ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -89,11 +89,12 @@ WSGI_APPLICATION = 'operations.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DBNAME'),
-        'USER':env('USERNAME'),
-        'PASSWORD':env('PASSWORD'),
+        'NAME': env('DB_NAME'),
+        'USER':env('DB_USERNAME'),
+        'PASSWORD':env('DB_PASSWORD'),
         "HOST":env('HOST_NAME'),
         'PORT':env('PORT')
+        
     }
 }
 
